@@ -10,24 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MirrorCastDemo
 {
     /// <summary>
-    /// Interaction logic for MainPage.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainPage : Page
+    public partial class MainWindow : Window
     {
-        public MainPage()
+        public MainWindow()
         {
             InitializeComponent();
 
             Current = this;
             NotifyUser(String.Empty, NotifyType.StatusMessage);
         }
-        public static MainPage Current;
+
+        public static MainWindow Current;
 
         /// <summary>
         /// Used to display messages to the user

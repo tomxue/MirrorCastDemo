@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace MirrorCastDemo
 {
-    public partial class MainPage : Page
+    public partial class MainWindow : Window
     {
         public const string FEATURE_NAME = "Projection";
 

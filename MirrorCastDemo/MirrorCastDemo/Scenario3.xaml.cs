@@ -25,7 +25,7 @@ namespace MirrorCastDemo
     /// </summary>
     public partial class Scenario3 : Page
     {
-        MainPage rootPage = MainPage.Current;
+        MainWindow rootPage = MainWindow.Current;
         int thisViewId;
 
         public Scenario3()
