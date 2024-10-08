@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SecondaryViewsHelpers;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,9 +48,38 @@ namespace MirrorCastDemo
             return -1; // Return -1 if the view ID cannot be obtained
         }
 
-        private void LoadAndDisplayScreens_Click(object sender, RoutedEventArgs e)
+        private async void LoadAndDisplayScreens_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                // Use the device selector query of the ProjectionManager to list wired/wireless displays
+                String projectorSelectorQuery = ProjectionManager.GetDeviceSelector();
 
+                this.findAndProject_button.IsEnabled = false;
+
+                // Clear the list box
+                this.displayList_listview.Items.Clear();
+                this.displayList_listview.Visibility = Visibility.Visible;
+
+                rootPage.NotifyUser("Searching for devices...", NotifyType.StatusMessage);
+
+                // Calling the device API to find devices based on the device query
+                var outputDevices = await DeviceInformation.FindAllAsync(projectorSelectorQuery);
+
+                // List found devices in the UI
+                for (int i = 0; i < outputDevices.Count; i++)
+                {
+                    var device = outputDevices[i];
+                    this.displayList_listview.Items.Add(device);
+                }
+
+                this.findAndProject_button.IsEnabled = true;
+                rootPage.NotifyUser("Found devices are now listed.", NotifyType.StatusMessage);
+            }
+            catch (InvalidOperationException)
+            {
+                rootPage.NotifyUser("An error occured when querying and listing devices.", NotifyType.ErrorMessage);
+            }
         }
 
         private async void StartProjecting(DeviceInformation selectedDisplay)
@@ -58,7 +89,8 @@ namespace MirrorCastDemo
             if (rootPage.ProjectionViewPageControl == null)
             {
                 // First, create a new, blank view
-                var thisDispatcher = Window.Current.Dispatcher;
+
+                var thisDispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
                 await CoreApplication.CreateNewView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     // ViewLifetimeControl is a wrapper to make sure the view is closed only
@@ -68,6 +100,7 @@ namespace MirrorCastDemo
                     // Assemble some data necessary for the new page
                     var initData = new ProjectionViewPageInitializationData();
                     initData.MainDispatcher = thisDispatcher;
+
                     initData.ProjectionViewPageControl = rootPage.ProjectionViewPageControl;
                     initData.MainViewId = thisViewId;
 
@@ -75,11 +108,11 @@ namespace MirrorCastDemo
                     // until "StartProjectingAsync" is called
                     var rootFrame = new Frame();
                     rootFrame.Navigate(typeof(ProjectionViewPage), initData);
-                    Window.Current.Content = rootFrame;
+                    this.Content = rootFrame;
 
                     // The call to Window.Current.Activate is required starting in Windos 10.
                     // Without it, the view will never appear.
-                    Window.Current.Activate();
+                    this.Activate();
                 });
             }
 

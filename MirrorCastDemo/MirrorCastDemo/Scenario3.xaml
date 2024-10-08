@@ -5,48 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MirrorCastDemo"
         mc:Ignorable="d"
-        Title="Scenario3" Height="450" Width="800">
-    <Grid Margin="12,20,12,12">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <StackPanel Margin="0,0,0,10">
-            <TextBlock Text="Description:"/>
-            <TextBlock TextWrapping="Wrap">This scenario shows you how to create your own display enumeration and selection experience (custom control or not) to start projecting multiple views.
-            </TextBlock>
-        </StackPanel>
+        Title="Scenario3" Height="200" Width="800">
+    <Grid>
+        <Grid Margin="12,20,12,12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock Text="Description:"/>
+                <TextBlock TextWrapping="Wrap">This scenario shows you how to create your own display enumeration and selection experience (custom control or not) to start projecting multiple views.
+                </TextBlock>
+            </StackPanel>
 
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                 <Grid>
-                    <StackPanel Margin="0,0,0,10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <StackPanel Margin="0,0,0,10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,-470">
+
+                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Button x:Name="findAndProject_button" FontFamily="Segoe UI Symbol" Click="LoadAndDisplayScreens_Click" Content="Find and select a display" />
+                        </StackPanel>
+
+                        <ListView HorizontalAlignment="Left" Height="400" Margin="0,37,0,212" VerticalAlignment="Top" Name="displayList_listview" Width="300" SelectionChanged="displayList_listview_SelectionChanged">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
                 </Grid>
+            </ScrollViewer>
 
-                <Grid Margin="0,0,0,-470">
-
-                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <Button x:Name="findAndProject_button" FontFamily="Segoe UI Symbol" Click="LoadAndDisplayScreens_Click" Content="Find and select a display" />
-                    </StackPanel>
-
-                    <ListView HorizontalAlignment="Left" Height="400" Margin="0,37,0,212" VerticalAlignment="Top" Name="displayList_listview" Width="300" SelectionChanged="displayList_listview_SelectionChanged">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </Grid>
-        </ScrollViewer>
-
-        <!-- Status Block for providing messages to the user.  Use the
-             NotifyUser() method to populate the message -->
-        <TextBlock x:Name="StatusBlock" Grid.Row="2" Margin="12, 10, 12, 10" Visibility="Collapsed"/>
+            <!-- Status Block for providing messages to the user.  Use the
+            NotifyUser() method to populate the message -->
+            <TextBlock x:Name="StatusBlock" Grid.Row="2" Margin="12, 10, 12, 10" Visibility="Collapsed"/>
+        </Grid>
     </Grid>
 </Window>
