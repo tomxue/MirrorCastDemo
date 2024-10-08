@@ -88,10 +88,11 @@ namespace MirrorCastDemo
             // Otherwise, we need to create a new view to show the presentation
             if (rootPage.ProjectionViewPageControl == null)
             {
+                //Application.Current.MainWindow.Activate();
                 // First, create a new, blank view
-                CoreApplicationView coreApplicationView = CoreApplication.CreateNewView();
+                //var thisDispatcher = Application.Current.MainWindow.Dispatcher;
                 var thisDispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                await coreApplicationView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await CoreApplication.CreateNewView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     // ViewLifetimeControl is a wrapper to make sure the view is closed only
                     // when the app is done with it
@@ -114,7 +115,6 @@ namespace MirrorCastDemo
                     // Without it, the view will never appear.
                     //this.Activate();
                     //Window.Current.Activate();
-
                 });
             }
 

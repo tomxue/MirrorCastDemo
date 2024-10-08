@@ -37,7 +37,7 @@ namespace MirrorCastDemo
                 Application.Current.MainWindow = new MainWindow();
             }
 
-            Frame rootFrame = Application.Current.MainWindow.Content as Frame;
+            Frame? rootFrame = Application.Current.MainWindow.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
