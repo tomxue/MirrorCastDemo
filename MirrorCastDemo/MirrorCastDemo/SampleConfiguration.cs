@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace MirrorCastDemo
 {
-    public partial class MainWindow : Window
+    public partial class MainPage : Page
     {
         public const string FEATURE_NAME = "Projection";
 

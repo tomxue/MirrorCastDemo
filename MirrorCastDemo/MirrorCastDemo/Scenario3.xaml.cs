@@ -1,7 +1,6 @@
 ﻿using SecondaryViewsHelpers;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Windows.ApplicationModel.Core;
 using Windows.Devices.Enumeration;
@@ -23,9 +23,9 @@ namespace MirrorCastDemo
     /// <summary>
     /// Interaction logic for Scenario3.xaml
     /// </summary>
-    public partial class Scenario3 : Window
+    public partial class Scenario3 : Page
     {
-        MainWindow rootPage = MainWindow.Current;
+        MainPage rootPage = MainPage.Current;
         int thisViewId;
 
         public Scenario3()
@@ -89,9 +89,9 @@ namespace MirrorCastDemo
             if (rootPage.ProjectionViewPageControl == null)
             {
                 // First, create a new, blank view
-
+                CoreApplicationView coreApplicationView = CoreApplication.CreateNewView();
                 var thisDispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                await CoreApplication.CreateNewView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await coreApplicationView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     // ViewLifetimeControl is a wrapper to make sure the view is closed only
                     // when the app is done with it
@@ -112,7 +112,9 @@ namespace MirrorCastDemo
 
                     // The call to Window.Current.Activate is required starting in Windos 10.
                     // Without it, the view will never appear.
-                    this.Activate();
+                    //this.Activate();
+                    //Window.Current.Activate();
+
                 });
             }
 

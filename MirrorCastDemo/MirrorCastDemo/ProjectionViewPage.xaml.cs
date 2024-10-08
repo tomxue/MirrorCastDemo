@@ -63,7 +63,7 @@ namespace MirrorCastDemo
             thisViewControl.Released -= thisViewControl_Released;
             await mainDispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                MainWindow.Current.ProjectionViewPageControl = null;
+                MainPage.Current.ProjectionViewPageControl = null;
             });
             this.Close();
         }
